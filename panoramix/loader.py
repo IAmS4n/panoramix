@@ -99,7 +99,7 @@ class Loader(EasyCopy):
             logger.info("Fetching code for %s...", address)
             from web3 import Web3
             url = "https://bsc-dataseed.binance.org/"
-            w3 = web3.Web3(web3.Web3.HTTPProvider(url))
+            w3 = Web3(Web3.HTTPProvider(url))
 
             code = w3.eth.getCode(Web3.toChecksumAddress(address)).hex()[2:]
             if code:
