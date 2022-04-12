@@ -28,28 +28,30 @@ coloredlogs.install(
     field_styles={"asctime": {"color": "white", "faint": True}},
 )
 
-def print_decompilation(addr):
-    assert len(addr)==42
-    
-    function_name = None
-    for arg_inx, arg in enumerate(sys.argv):
-        if arg=="--function_name":
-            function_name = sys.argv[arg_inx+1]
-            break
-           
-    decompilation = decompile_bytecode(addr, function_name)
-
-    print(decompilation.text)
 
 def main():
     if len(sys.argv) == 1:
-        print("panoramix --address --function_name")
+        print("panoramix [--address --byte_code] [--function_name]")
         exit(1)
-    
+
+    addr = None
+    function_name = None
+    byte_code = None
     for arg_inx, arg in enumerate(sys.argv):
         if arg=="--address":
             addr = sys.argv[arg_inx+1]
-            print_decompilation(addr)
+        elif arg=="--byte_code":
+            byte_code = sys.argv[arg_inx+1]
+        elif arg=="--function_name":
+            function_name = sys.argv[arg_inx+1]
+    if byte_code is not None:
+        decompilation = decompile_bytecode(byte_code, function_name)
+    elif addr is not None:
+        decompilation = decompile_address(addr, function_name)
+    else:
+        raise ValueError()
+
+    print(decompilation.text)
 
 if __name__ == "__main__":
     main()
