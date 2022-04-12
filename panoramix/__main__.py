@@ -88,7 +88,7 @@ def main():
         print("panoramix --address BSCADDRESS")
         exit(1)
     
-    for arg_inx, arg in enuemrate(sys.argv):
+    for arg_inx, arg in enumerate(sys.argv):
         if arg=="--address":
             addr = sys.argv[arg_inx+1]
             print_decompilation(addr)
