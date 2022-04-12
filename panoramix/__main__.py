@@ -31,11 +31,12 @@ coloredlogs.install(
 
 def main():
     if len(sys.argv) == 1:
-        print("panoramix [--address --byte_code] [--function_name] [--verbose] [--silent] [--profile]")
+        print("panoramix [--address --byte_code] [--function_name --function_hash] [--verbose] [--silent] [--profile]")
         exit(1)
 
     addr = None
     function_name = None
+    function_hash = None
     byte_code = None
     for arg_inx, arg in enumerate(sys.argv):
         if arg=="--address":
@@ -44,10 +45,13 @@ def main():
             byte_code = sys.argv[arg_inx+1]
         elif arg=="--function_name":
             function_name = sys.argv[arg_inx+1]
+        elif arg=="--function_hash":
+            function_hash = sys.argv[arg_inx+1]
+            
     if byte_code is not None:
-        decompilation = decompile_bytecode(byte_code, function_name)
+        decompilation = decompile_bytecode(byte_code, function_name, function_hash)
     elif addr is not None:
-        decompilation = decompile_address(addr, function_name)
+        decompilation = decompile_address(addr, function_name, function_hash)
     else:
         raise ValueError()
 
