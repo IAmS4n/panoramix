@@ -39,19 +39,19 @@ class TimeoutInterrupt(BaseException):
         return repr(self.value)
 
 
-def decompile_bytecode(code: str, only_func_name=None) -> Decompilation:
+def decompile_bytecode(code: str, only_func_name=None, only_func_hash=None) -> Decompilation:
     loader = Loader()
     loader.load_binary(code)  # Code is actually hex.
-    return _decompile_with_loader(loader, only_func_name)
+    return _decompile_with_loader(loader, only_func_name, only_func_hash)
 
 
-def decompile_address(address: str, only_func_name=None) -> Decompilation:
+def decompile_address(address: str, only_func_name=None, only_func_hash=None) -> Decompilation:
     loader = Loader()
     loader.load_addr(address)
-    return _decompile_with_loader(loader, only_func_name)
+    return _decompile_with_loader(loader, only_func_name, only_func_hash)
 
 
-def _decompile_with_loader(loader, only_func_name=None) -> Decompilation:
+def _decompile_with_loader(loader, only_func_name=None, only_func_hash=None) -> Decompilation:
 
     """
 
@@ -146,6 +146,8 @@ def _decompile_with_loader(loader, only_func_name=None) -> Decompilation:
         if only_func_name is not None and not fname.startswith(only_func_name):
             # if user provided a function_name in command line,
             # skip all the functions that are not it
+            continue
+        if only_func_hash is not None and not hash.startswith(only_func_hash):
             continue
 
         logger.info("Parsing %s...", fname)
