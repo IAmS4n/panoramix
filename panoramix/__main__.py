@@ -31,7 +31,7 @@ coloredlogs.install(
 
 def main():
     if len(sys.argv) == 1:
-        print("panoramix [--address --byte_code] [--function_name]")
+        print("panoramix [--address --byte_code] [--function_name] [--verbose] [--silent] [--profile]")
         exit(1)
 
     addr = None
