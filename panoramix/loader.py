@@ -100,6 +100,7 @@ class Loader(EasyCopy):
             from web3 import Web3
             url = "https://bsc-dataseed.binance.org/"
             w3 = Web3(Web3.HTTPProvider(url))
+            assert input("Getting from Binance RPC?[ok]")=="ok
 
             code = w3.eth.getCode(Web3.toChecksumAddress(address)).hex()[2:]
             if code:
